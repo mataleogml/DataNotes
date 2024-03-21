@@ -3,11 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grid with Zoom Effect</title>
+<title>Grid with Infinite Scroll</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
 </head>
 <body>
 <div class="grid-container" id="gridContainer"></div>
+<div id="loadingMessage" style="display: none;">Loading...</div>
 <script src="stickie.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    loadInitialData();
+    window.addEventListener('scroll', handleScroll);
+});
+
+function loadInitialData() {
+    fetchAndAppendData();
+}
+
+function fetchAndAppendData() {
+    document.getElementById('loadingMessage').style.display = 'block';
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            createGrid(data);
+            document.getElementById('loadingMessage').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('loadingMessage').style.display = 'none';
+        });
+}
+
+function handleScroll() {
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolledDistance = window.scrollY;
+
+    if (scrolledDistance >= scrollableHeight * 0.9) {
+        fetchAndAppendData();
+    }
+}
+</script>
 </body>
 </html>

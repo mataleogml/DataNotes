@@ -1,41 +1,33 @@
-body {
+/* styles.css */
+
+body, html {
+    height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-  }
-  
-  .grid-container {
+}
+
+.grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 10px;
     padding: 20px;
-  }
-  
-  .cell {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    cursor: pointer;
-    transition: transform 0.5s ease;
-  }
-  
-  .cell:hover {
-    transform: scale(1.05);
-  }
+    min-height: 100vh; /* Ensure the grid container takes up at least the full viewport height */
+}
 
-/* Add this CSS for animation */
-@keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-100% + var(--offset)));
-    }
-  }
-  
-  .grid-container {
-    overflow: hidden; /* Ensure the overflow is hidden */
-    white-space: nowrap; /* Prevent content from wrapping */
-  }
-  
+.grid-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    font-family: 'helvetica';
+}
+
+.grid-item:hover {
+    transform: scale(2);
+}
+
+#loadingMessage {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
