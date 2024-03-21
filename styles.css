@@ -23,4 +23,19 @@ body {
   .cell:hover {
     transform: scale(1.05);
   }
+
+/* Add this CSS for animation */
+@keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% + var(--offset)));
+    }
+  }
+  
+  .grid-container {
+    overflow: hidden; /* Ensure the overflow is hidden */
+    white-space: nowrap; /* Prevent content from wrapping */
+  }
   

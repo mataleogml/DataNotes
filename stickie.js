@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Determine number of columns based on device width
     const numColumns = window.innerWidth >= 768 ? Infinity : 5;
     
-    gridContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
-    
+    let cellWidth = 0;
+  
+    // Create cells
     data.forEach((item, index) => {
       const cell = document.createElement('div');
       cell.classList.add('cell');
@@ -21,18 +22,23 @@ document.addEventListener("DOMContentLoaded", function() {
       const color = getCategoryColor(item.category, index);
       cell.style.backgroundColor = color;
       
-      // Set cell height equal to width to make it square
-      setSquareCellSize(cell);
-      
       gridContainer.appendChild(cell);
     });
-    
+  
+    // Duplicate the content
+    gridContainer.innerHTML += gridContainer.innerHTML;
+  
+    // Wait for layout to settle then calculate cell size and start animation
+    setTimeout(() => {
+      cellWidth = gridContainer.firstElementChild.offsetWidth;
+      setSquareCellSize(gridContainer, cellWidth);
+      startScrollAnimation(gridContainer, cellWidth);
+    }, 0);
+  
     // Adjust cell size when the window is resized
     window.addEventListener('resize', function() {
-      const cells = document.querySelectorAll('.cell');
-      cells.forEach(cell => {
-        setSquareCellSize(cell);
-      });
+      cellWidth = gridContainer.firstElementChild.offsetWidth;
+      setSquareCellSize(gridContainer, cellWidth);
     });
   }
   
@@ -46,8 +52,21 @@ document.addEventListener("DOMContentLoaded", function() {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   }
   
-  function setSquareCellSize(cell) {
-    const width = cell.offsetWidth;
-    cell.style.height = width + 'px';
+  function setSquareCellSize(gridContainer, width) {
+    const cells = gridContainer.querySelectorAll('.cell');
+    cells.forEach(cell => {
+      cell.style.height = width + 'px';
+    });
+  }
+  
+  function startScrollAnimation(gridContainer, cellWidth) {
+    const animationDuration = (cellWidth / 100) * 5; // Adjust this value to control scroll speed
+    
+    gridContainer.style.animation = `scroll ${animationDuration}s linear infinite`;
+    gridContainer.style.setProperty('--offset', cellWidth + 'px');
+    
+    gridContainer.addEventListener('animationiteration', () => {
+      gridContainer.scrollLeft = 0; // Reset scroll position when the animation iteration completes
+    });
   }
   
