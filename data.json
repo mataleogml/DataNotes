@@ -1,0 +1,42 @@
+[
+    {
+      "category": "interview",
+      "text": "I love this product"
+    },
+    {
+      "category": "questionnaire",
+      "text": "I hate this feature"
+    },
+    {
+      "category": "feedback",
+      "text": "I love this product"
+    },
+    {
+      "category": "review",
+      "text": "I hate this feature"
+    },
+    {
+      "category": "survey",
+      "text": "I love this product"
+    },
+    {
+      "category": "comment",
+      "text": "I hate this feature"
+    },
+    {
+      "category": "testimonial",
+      "text": "I love this product"
+    },
+    {
+      "category": "evaluation",
+      "text": "I hate this feature"
+    },
+    {
+      "category": "opinion",
+      "text": "I love this product"
+    },
+    {
+      "category": "critique",
+      "text": "I hate this feature"
+    }
+  ]

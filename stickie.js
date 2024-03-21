@@ -21,7 +21,18 @@ document.addEventListener("DOMContentLoaded", function() {
       const color = getCategoryColor(item.category, index);
       cell.style.backgroundColor = color;
       
+      // Set cell height equal to width to make it square
+      setSquareCellSize(cell);
+      
       gridContainer.appendChild(cell);
+    });
+    
+    // Adjust cell size when the window is resized
+    window.addEventListener('resize', function() {
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        setSquareCellSize(cell);
+      });
     });
   }
   
@@ -33,5 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Convert HSL to RGB
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  }
+  
+  function setSquareCellSize(cell) {
+    const width = cell.offsetWidth;
+    cell.style.height = width + 'px';
   }
   
