@@ -1,33 +1,21 @@
-/* styles.css */
-
-body, html {
-    height: 100%;
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
     padding: 20px;
-    min-height: 100vh; /* Ensure the grid container takes up at least the full viewport height */
-}
-
-.grid-item {
     background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 20px;
-    transition: transform 0.3s ease;
-    font-family: 'helvetica';
 }
 
-.grid-item:hover {
-    transform: scale(2);
-}
-
-#loadingMessage {
+h1 {
     text-align: center;
-    padding: 10px;
-    font-weight: bold;
+    color: #333;
+}
+
+#visualization {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+svg {
+    display: block;
+    margin: auto;
 }

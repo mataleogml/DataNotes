@@ -1,0 +1,11 @@
+﻿note_id,parent_note,level,type,participant_id,insight
+0,7,0,interview,1,I can anxious when I need to talk to an assioctae
+1,8,0,interview,1,I can't find what I need in the store
+2,9,0,interview,2,It is a challenge to navigate a store
+3,9,0,focus_group,2,I can't locate the item I am looking for
+4,8,0,focus_group,3,I love self checkout
+5,7,0,focus_group,4,Line at selfcheckout it too long
+6,8,0,focus_group,6,I like to speak with an assiocate
+7,,2,affinization,,Customer does not want to interact with store associate
+8,,1,affinization,,Customer find the existing store layout to be confusing
+9,,1,affinization,,I like cheese
