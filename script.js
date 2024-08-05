@@ -90,6 +90,15 @@ function handleMouseOver(event, d) {
     d3.select(this)
         .transition()
         .duration(200)
+        .style("transform", `scale(${1 + growth})`)
+        .style("transform-origin", "center")
+        .style("z-index", 10);
+}
+
+function handleMouseOut(event, d) {
+    d3.select(this)
+        .transition()
+        .duration(200)
         .attr("width", squareSize * (1 + growth))
         .attr("height", squareSize * (1 + growth))
         .attr("x", function() {
@@ -102,37 +111,59 @@ function handleMouseOver(event, d) {
         });
 }
 
-function handleMouseOut(event, d) {
-    d3.select(this)
-        .transition()
-        .duration(200)
-        .attr("width", squareSize)
-        .attr("height", squareSize)
-        .attr("x", function() {
-            const currentX = parseFloat(d3.select(this).attr("x"));
-            return currentX + (squareSize * 0.1) / 2;
-        })
-        .attr("y", function() {
-            const currentY = parseFloat(d3.select(this).attr("y"));
-            return currentY + (squareSize * 0.1) / 2;
-        });
-}
-
 function handleClick(event, d) {
+    const clickedElement = event.target;
+    const rect = clickedElement.getBoundingClientRect();
+    const startX = rect.left + window.scrollX;
+    const startY = rect.top + window.scrollY;
+    const startWidth = rect.width;
+    const startHeight = rect.height;
+
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
     const popupTitle = document.getElementById("popup-title");
     const popupInsight = document.getElementById("popup-insight");
 
     if (popup && popupContent && popupTitle && popupInsight) {
+        // Create temporary element for animation
+        const temp = document.createElement('div');
+        temp.style.position = 'fixed';
+        temp.style.left = startX + 'px';
+        temp.style.top = startY + 'px';
+        temp.style.width = startWidth + 'px';
+        temp.style.height = startHeight + 'px';
+        temp.style.backgroundColor = getColorByType(d.type);
+        temp.style.borderRadius = '5px';
+        temp.style.transition = 'all 0.3s ease-in-out';
+        temp.style.zIndex = '1000';
+        document.body.appendChild(temp);
+
+        // Set content and style for actual popup
         popupTitle.textContent = `Note ID: ${d.note_id}`;
         popupInsight.textContent = d.insight;
+        popupContent.style.backgroundColor = getColorByType(d.type);
         
-        // Set the background color based on the datapoint type
-        const backgroundColor = getColorByType(d.type);
-        popupContent.style.backgroundColor = backgroundColor;
-        
-        popup.style.display = "flex";
+        // Trigger animation
+        setTimeout(() => {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const popupWidth = 300; // Set this to match your CSS
+            const popupHeight = 300; // Set this to match your CSS
+            const endX = (windowWidth - popupWidth) / 2;
+            const endY = (windowHeight - popupHeight) / 2;
+            
+            temp.style.left = endX + 'px';
+            temp.style.top = endY + 'px';
+            temp.style.width = popupWidth + 'px';
+            temp.style.height = popupHeight + 'px';
+        }, 50);
+
+        // Show actual popup and remove temp element
+        setTimeout(() => {
+            popup.style.display = "flex";
+            popup.classList.add('show');
+            document.body.removeChild(temp);
+        }, 350);
     } else {
         console.error("Popup elements not found");
     }
@@ -140,10 +171,51 @@ function handleClick(event, d) {
 
 function closePopup() {
     const popup = document.getElementById("popup");
-    if (popup) {
+    const popupContent = document.querySelector(".popup-content");
+    if (popup && popupContent) {
+        const rect = popupContent.getBoundingClientRect();
+        const endX = rect.left + window.scrollX;
+        const endY = rect.top + window.scrollY;
+        const endWidth = rect.width;
+        const endHeight = rect.height;
+
+        // Create temporary element for closing animation
+        const temp = document.createElement('div');
+        temp.style.position = 'fixed';
+        temp.style.left = endX + 'px';
+        temp.style.top = endY + 'px';
+        temp.style.width = endWidth + 'px';
+        temp.style.height = endHeight + 'px';
+        temp.style.backgroundColor = popupContent.style.backgroundColor;
+        temp.style.borderRadius = '5px';
+        temp.style.transition = 'all 0.3s ease-in-out';
+        temp.style.zIndex = '1000';
+        document.body.appendChild(temp);
+
+        // Hide the actual popup
+        popup.classList.remove('show');
         popup.style.display = "none";
+
+        // Trigger closing animation
+        setTimeout(() => {
+            const lastClickedElement = document.querySelector('rect:hover');
+            if (lastClickedElement) {
+                const rect = lastClickedElement.getBoundingClientRect();
+                temp.style.left = (rect.left + window.scrollX) + 'px';
+                temp.style.top = (rect.top + window.scrollY) + 'px';
+                temp.style.width = rect.width + 'px';
+                temp.style.height = rect.height + 'px';
+            } else {
+                temp.style.transform = 'scale(0)';
+            }
+        }, 50);
+
+        // Remove temp element after animation
+        setTimeout(() => {
+            document.body.removeChild(temp);
+        }, 350);
     } else {
-        console.error("Popup element not found");
+        console.error("Popup elements not found");
     }
 }
 
