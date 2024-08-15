@@ -20,6 +20,19 @@ svg {
     margin: auto;
 }
 
+svg rect {
+    transform-box: fill-box;
+}
+
+svg text {
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+}
+
+svg g {
+    transition: all 0.2s ease-in-out;
+}
+
 .popup {
     display: none;
     position: fixed;
