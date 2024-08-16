@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datapoint Explorer</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>DataNotes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/app.js" type="module" defer></script>
 </head>
-<body>
-    <h1>Datapoint Explorer</h1>
-    <div id="visualization"></div>
-    
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="script.js"></script>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-          <div class="popup-header">
-            <button class="close">×</button>
-            <button class="more">⋮</button>
-          </div>
-          <div class="popup-body">
-            <h2 id="popup-title"></h2>
-            <p id="popup-insight"></p>
-          </div>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">DataNotes</h1>
+        <div id="upload-form" class="mb-4">
+            <!-- Upload form will be inserted here -->
         </div>
-      </div>
+        <div id="dashboard" class="flex">
+            <div id="not-sorted" class="w-1/4 bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold mb-2">Not Sorted</h2>
+                <!-- Unsorted sticky notes will be inserted here -->
+            </div>
+            <div id="groups-container" class="w-3/4 ml-4 bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold mb-2">Groups</h2>
+                <!-- Grouped sticky notes will be inserted here -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
