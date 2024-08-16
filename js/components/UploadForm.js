@@ -7,7 +7,7 @@ export function initUploadForm() {
     const uploadForm = document.createElement('form');
     uploadForm.innerHTML = `
         <input type="file" id="file-upload" accept=".txt,.csv" class="mb-2">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
+        <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Upload</button>
     `;
     
     uploadForm.addEventListener('submit', handleUpload);
